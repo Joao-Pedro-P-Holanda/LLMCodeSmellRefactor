@@ -140,7 +140,7 @@ class KanbanViewTest {
     void habitEmptyView() throws Exception {
         try{
             String response = kanbanView.kanbanView();
-            List<String> splitResponse= List.of(response.split("\r\n"));
+            List<String> splitResponse= List.of(response.split(System.lineSeparator()));
             int count = 0;
             for(String str : splitResponse){
                 if(str.contains("No material found")){
