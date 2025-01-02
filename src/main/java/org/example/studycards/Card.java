@@ -8,6 +8,12 @@ public class Card {
         this.question = question;
         this.answer = answer;
     }
+    
+    public String formatResponse(Integer cardId) {
+        return "[" + cardId + "] " +
+                "The random question was: " + this.getQuestion() + " | " +
+                "The answer is: " + this.getAnswer();
+    }
 
     public String getQuestion() {
         return question;
