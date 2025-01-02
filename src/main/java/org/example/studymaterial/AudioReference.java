@@ -1,6 +1,7 @@
 package org.example.studymaterial;
 
 import java.util.List;
+import java.util.Map;
 
 public class AudioReference extends Reference {
     public enum AudioQuality {
@@ -56,4 +57,9 @@ public class AudioReference extends Reference {
          this.setLink(link);
      }
 
+    @Override
+    public void incrementCount(Map<String, Integer> referenceCount) {
+        Integer audioCount = referenceCount.get("Audio References");
+        referenceCount.put("Audio References", audioCount + 1);
+    }
 }

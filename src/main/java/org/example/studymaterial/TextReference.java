@@ -1,5 +1,7 @@
 package org.example.studymaterial;
 
+import java.util.Map;
+
 public class TextReference extends Reference{
     private int wordCount;
     private String format;
@@ -28,5 +30,11 @@ public class TextReference extends Reference{
         }
         return true;
     }
-
+    @Override
+    public void incrementCount(Map<String, Integer> referenceCount) {
+        if (handleTextAccess()) {
+            Integer textCount = referenceCount.get("Text References");
+            referenceCount.put("Text References", textCount + 1);
+        }
+    }
 }

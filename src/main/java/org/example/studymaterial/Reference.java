@@ -1,5 +1,7 @@
 package org.example.studymaterial;
 
+import java.util.Map;
+
 public abstract class Reference {
     private String title;
     private String description;
@@ -100,4 +102,6 @@ public abstract class Reference {
     public void setShareCount(int shareCount) {
         this.shareCount = shareCount;
     }
+
+    public abstract void incrementCount(Map<String, Integer> referenceCount);
 }
