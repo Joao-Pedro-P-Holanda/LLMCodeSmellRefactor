@@ -123,7 +123,7 @@ public class StudyCardsController {
 
     public void handleGetRandomCardFromBox() {
         try{
-            String response = getRandomCardFromBox();
+            String response = leitnerSystem.getRandomCardFromBox();
             System.out.println(response);
         }catch (Exception e){
             System.out.println(e.getMessage());
