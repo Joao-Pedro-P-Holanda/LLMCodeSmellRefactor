@@ -25,6 +25,26 @@ public class HabitTracker {
         this.nextId = 1;
     }
 
+    public String getHabitDateViewAll() {
+        StringBuilder response = new StringBuilder();
+        for(Habit habit : getHabits()){
+            response.append(getHabitViewString(habit));
+        }
+        return response.toString();
+    }
+    private String getHabitViewString(Habit habit) {
+        return "[ Habit: " + habit.getName() + ". Records: " + getHabitRecordDatesAsString(habit) + "]";
+    }
+
+    private String getHabitRecordDatesAsString(Habit habit) {
+        List<LocalDateTime> records = getHabitRecords(habit.getId());
+        StringBuilder recordDates = new StringBuilder();
+        for(LocalDateTime record : records){
+            recordDates.append(formatHabitDate(record)).append(", ");
+        }
+        return recordDates.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder response = new StringBuilder();
