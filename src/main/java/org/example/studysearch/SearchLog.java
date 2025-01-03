@@ -58,4 +58,10 @@ public class SearchLog {
     public void setLogName(String logName) {
         this.logName = logName;
     }
+
+    public String updateAndGetName(String text) {
+        addSearchHistory(text);
+        setNumUsages(getNumUsages() + 1);
+        return getLogName();
+    }
 }
