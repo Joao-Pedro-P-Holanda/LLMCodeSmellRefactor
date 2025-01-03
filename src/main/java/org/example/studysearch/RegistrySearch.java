@@ -8,28 +8,25 @@ import org.example.studyregistry.StudyTaskManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegistrySearch implements Search<String>{
+public class RegistrySearch implements Search<String> {
     private SearchLog searchLog = new SearchLog("Registry Search");
-    public RegistrySearch(){}
+
+    public RegistrySearch() {}
 
     @Override
     public List<String> search(String text) {
-        return handleRegistrySearch(text);
-    }
-
-    public SearchLog getSearchLog() {
-        return searchLog;
-    }
-
-    private List<String> handleRegistrySearch(String text){
         List<String> results = new ArrayList<>();
         results.addAll(CardManager.getCardManager().searchInCards(text));
         results.addAll(HabitTracker.getHabitTracker().searchInHabits(text));
         results.addAll(TodoTracker.getInstance().searchInTodos(text));
         results.addAll(StudyTaskManager.getStudyTaskManager().searchInRegistries(text));
-        this.searchLog.addSearchHistory(text);
-        this.searchLog.setNumUsages(this.searchLog.getNumUsages() + 1);
-        results.add("\nLogged in: " + this.searchLog.getLogName());
+        searchLog.addSearchHistory(text);
+        searchLog.incrementNumUsages();
+        results.add("\nLogged in: " + searchLog.getLogName());
         return results;
+    }
+
+    public SearchLog getSearchLog() {
+        return searchLog;
     }
 }

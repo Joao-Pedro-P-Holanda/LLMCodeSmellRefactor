@@ -19,6 +19,11 @@ public class SearchLog {
         numUsages = 0;
         isLocked = false;
     }
+
+    public void incrementNumUsages() {
+        numUsages++;
+    }
+
     public void addSearchHistory(String searchHistory) {
         this.searchHistory.add(searchHistory);
     }
