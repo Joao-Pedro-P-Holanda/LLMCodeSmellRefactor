@@ -1,6 +1,8 @@
 package org.example.controllers;
 
+import org.example.studymaterial.AudioEdit;
 import org.example.studymaterial.AudioReference;
+import org.example.studymaterial.AudioReference.AudioQuality;
 import org.example.studymaterial.Reference;
 import org.example.studymaterial.TextReference;
 import org.example.studymaterial.VideoReference;
@@ -109,14 +111,83 @@ public class StudyRegistryController {
         studyTaskManager.addRegistry(goal);
     }
 
-    private void editAudio(AudioReference audioReference){
+    private void editAudio(AudioReference audioReference) {
         handleMethodHeader("(Audio Edit)");
-        System.out.println("Type the following info:  AudioReference. AudioQuality audioQuality, boolean isDownloadable, " +
-                "String title, String description, String link, String accessRights, String license, String language, int rating, " +
-                "int viewCount, int shareCount \n");
-        AudioReference.AudioQuality quality =AudioReference.audioQualityAdapter(getInput());
-        audioReference.editAudio(quality, Boolean.parseBoolean(getInput()), getInput(), getInput(), getInput(), getInput(),
-                getInput(), getInput(), Integer.parseInt(getInput()), Integer.parseInt(getInput()), Integer.parseInt(getInput()));
+    
+        AudioEdit.AudioEditBuilder builder = new AudioEdit.AudioEditBuilder();
+    
+        builder.title(getTitle())
+               .description(getDescription())
+               .link(getLink())
+               .audioQuality(getAudioQuality())
+               .isDownloadable(getIsDownloadable())
+               .accessRights(getAccessRights())
+               .license(getLicense())
+               .language(getLanguage())
+               .rating(getRating())
+               .viewCount(getViewCount())
+               .shareCount(getShareCount());
+    
+        AudioEdit edit = builder.build();
+        audioReference.editAudio(edit);
+    }
+
+    private int getRating() {
+        System.out.println("Avaliação (número inteiro):");
+        return Integer.parseInt(getInput());
+    }
+    
+    private String getTitle() {
+        System.out.println("Título:");
+        return getInput();
+    }
+    
+    private String getDescription() {
+        System.out.println("Descrição:");
+        return getInput();
+    }
+    
+
+    private String getLink() {
+        System.out.println("Link:");
+        return getInput();
+    }
+    
+    private AudioQuality getAudioQuality() {
+        System.out.println("Qualidade de áudio (LOW, MEDIUM, HIGH, VERY_HIGH):");
+        String input = getInput();
+        return AudioReference.audioQualityAdapter(input);
+    }
+    
+    private boolean getIsDownloadable() {
+        System.out.println("Disponível para download? (true/false):");
+        String input = getInput();
+        return Boolean.parseBoolean(input);
+    }
+    
+    private String getAccessRights() {
+        System.out.println("Direitos de acesso:");
+        return getInput();
+    }
+    
+    private String getLicense() {
+        System.out.println("Licença:");
+        return getInput();
+    }
+    
+    private String getLanguage() {
+        System.out.println("Idioma:");
+        return getInput();
+    }
+    
+    private int getViewCount() {
+        System.out.println("Número de visualizações (número inteiro):");
+        return Integer.parseInt(getInput());
+    }
+    
+    private int getShareCount() {
+        System.out.println("Número de compartilhamentos (número inteiro):");
+        return Integer.parseInt(getInput());
     }
 
     private AudioReference addAudioReference(){
