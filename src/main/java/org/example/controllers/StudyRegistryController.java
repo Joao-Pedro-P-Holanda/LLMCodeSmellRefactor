@@ -53,15 +53,50 @@ public class StudyRegistryController {
         studyTaskManager.addRegistry(task);
     }
 
-    private void handleSetObjective(StudyObjective objective){
+    private void handleSetObjective(StudyObjective objective) {
         handleMethodHeader("(Study Objective Edit)");
-        System.out.println("Type the following info: Integer id, Integer priority " +
-                "Integer practicedDays, int day, int month, int year, String name, String title, String description, " +
-                "String topic, String objectiveInOneLine, String objectiveFullDescription, String motivation, " +
-                "Double duration, boolean isActive  \n");
-        objective.handleSetObjective(Integer.parseInt(getInput()), Integer.parseInt(getInput()),Integer.parseInt(getInput()),Integer.parseInt(getInput()),Integer.parseInt(getInput()),
-                Integer.parseInt(getInput()), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(),
-                Double.parseDouble(getInput()), Boolean.parseBoolean(getInput()));
+        System.out.println("Type the following info: ");
+    
+        StudyObjectiveDTO dto = new StudyObjectiveDTO(
+                getIntInput("Integer id"),
+                getIntInput("Integer priority"),
+                getIntInput("Integer practicedDays"),
+                getIntInput("int day"),
+                getIntInput("int month"),
+                getIntInput("int year"),
+                getStringInput("String name"),
+                getStringInput("String title"),
+                getStringInput("String description"),
+                getStringInput("String topic"),
+                getStringInput("String objectiveInOneLine"),
+                getStringInput("String objectiveFullDescription"),
+                getStringInput("String motivation"),
+                getDoubleInput("Double duration"),
+                getBooleanInput("boolean isActive")
+        );
+    
+        objective.handleSetObjective(dto); 
+    }
+    
+    
+    private Integer getIntInput(String message) {
+        System.out.print(message + ": ");
+        return Integer.parseInt(getInput());
+    }
+    
+    private String getStringInput(String message) {
+        System.out.print(message + ": ");
+        return getInput();
+    }
+    
+    private Double getDoubleInput(String message) {
+        System.out.print(message + ": ");
+        return Double.parseDouble(getInput());
+    }
+    
+    private boolean getBooleanInput(String message) {
+        System.out.print(message + ": ");
+        return Boolean.parseBoolean(getInput());
     }
 
     private StudyObjective getStudyObjectiveInfo(){

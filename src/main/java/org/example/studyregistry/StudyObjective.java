@@ -82,15 +82,34 @@ public class StudyObjective extends Registry{
         this.startDate= LocalDateTime.of(year, month, day, 0, 0);
     }
 
-    public void handleSetObjective(Integer id, Integer priority, Integer practicedDays, int day, int month, int year, String name, String title, String description, String topic, String objectiveInOneLine, String objectiveFullDescription, String motivation, Double duration, boolean isActive){
-        handleSetRegistry(id, name, priority, isActive);
-        handleSetTextualInfo(title, description, topic, objectiveInOneLine, objectiveFullDescription, motivation);
-        handleSetTime(practicedDays, day, month, year, duration);
+    public void handleSetObjective(StudyObjectiveDTO dto) {
+        handleSetRegistry(dto.id(), dto.name(), dto.priority(), dto.isActive());
+        handleSetTextualInfo(dto.title(), dto.description(), dto.topic(),
+                             dto.objectiveInOneLine(), dto.objectiveFullDescription(),
+                             dto.motivation());
+        handleSetTime(dto.practicedDays(), dto.day(), dto.month(), dto.year(), dto.duration());
     }
 
-    public int handleSetObjectiveAdapter(List<Integer> intProperties, List<String> stringProperties, Double duration, boolean isActive){
-        handleSetObjective(intProperties.get(0), intProperties.get(1), intProperties.get(2), intProperties.get(3), intProperties.get(4), intProperties.get(5),
-                stringProperties.get(0), stringProperties.get(1), stringProperties.get(2), stringProperties.get(3), stringProperties.get(4), stringProperties.get(5), stringProperties.get(6), duration, isActive);
+    public int handleSetObjectiveAdapter(List<Integer> intProperties, List<String> stringProperties, Double duration, boolean isActive) {
+        StudyObjectiveDTO dto = new StudyObjectiveDTO(
+                intProperties.get(0), // id
+                intProperties.get(1), // priority
+                intProperties.get(2), // practicedDays
+                intProperties.get(3), // day
+                intProperties.get(4), // month
+                intProperties.get(5), // year
+                stringProperties.get(0), // name
+                stringProperties.get(1), // title
+                stringProperties.get(2), // description
+                stringProperties.get(3), // topic
+                stringProperties.get(4), // objectiveInOneLine
+                stringProperties.get(5), // objectiveFullDescription
+                stringProperties.get(6), // motivation
+                duration,
+                isActive
+        );
+    
+        handleSetObjective(dto);
         return intProperties.get(0);
     }
 
