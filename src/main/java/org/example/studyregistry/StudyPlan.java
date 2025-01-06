@@ -37,16 +37,49 @@ public class StudyPlan extends Registry{
         steps.add(toAdd);
     }
 
-    public void assignSteps(String firstStep, String resetStudyMechanism, String consistentStep, String seasonalSteps,
-                            String basicSteps, String mainObjectiveTitle, String mainGoalTitle, String mainMaterialTopic,
-                            String mainTask, Integer numberOfSteps, boolean isImportant, LocalDateTime startDate, LocalDateTime endDate) {
+    public void assignSteps(AssignStepsDTO dto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-        this.steps = new ArrayList<>(Arrays.asList(firstStep, resetStudyMechanism, consistentStep, seasonalSteps, basicSteps, "Number of steps: " + numberOfSteps.toString(), "Is it important to you? " + isImportant, startDate.format(formatter), endDate.format(formatter), mainObjectiveTitle, mainGoalTitle, mainMaterialTopic, mainTask));
+    
+        this.steps = new ArrayList<>(Arrays.asList(
+            dto.firstStep(),
+            dto.resetStudyMechanism(),
+            dto.consistentStep(),
+            dto.seasonalSteps(),
+            dto.basicSteps(),
+            "Number of steps: " + dto.numberOfSteps(),
+            "Is it important to you? " + dto.isImportant(),
+            dto.startDate().format(formatter),
+            dto.endDate().format(formatter),
+            dto.mainObjectiveTitle(),
+            dto.mainGoalTitle(),
+            dto.mainMaterialTopic(),
+            dto.mainTask()
+        ));
     }
 
-    public void handleAssignSteps(List<String> stringProperties, Integer numberOfSteps, boolean isImportant, LocalDateTime startDate, LocalDateTime endDate){
-        assignSteps(stringProperties.get(0), stringProperties.get(1), stringProperties.get(2), stringProperties.get(3), stringProperties.get(4), stringProperties.get(5), stringProperties.get(6), stringProperties.get(7), stringProperties.get(8), numberOfSteps, isImportant, startDate, endDate);
+    public void handleAssignSteps(List<String> stringProperties, 
+                             Integer numberOfSteps, 
+                             boolean isImportant, 
+                             LocalDateTime startDate, 
+                             LocalDateTime endDate) {
+
+        AssignStepsDTO dto = new AssignStepsDTO(
+            stringProperties.get(0), 
+            stringProperties.get(1), 
+            stringProperties.get(2), 
+            stringProperties.get(3), 
+            stringProperties.get(4), 
+            numberOfSteps, 
+            isImportant, 
+            startDate, 
+            endDate, 
+            stringProperties.get(5), 
+            stringProperties.get(6), 
+            stringProperties.get(7), 
+            stringProperties.get(8)
+        );
+
+        assignSteps(dto);
     }
 
 }

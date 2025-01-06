@@ -120,16 +120,49 @@ public class StudyRegistryController {
         return plan;
     }
 
-    private void handleSetSteps(StudyPlan studyPlan){
+    private void handleSetSteps(StudyPlan studyPlan) {
         handleMethodHeader("(Study Plan Edit)");
-        System.out.println("Type the following info: String firstStep, String resetStudyMechanism, String consistentStep, " +
-                "String seasonalSteps, String basicSteps, String mainObjectiveTitle, String mainGoalTitle, String mainMaterialTopic, " +
-                "String mainTask, @NotNull  Integer numberOfSteps, boolean isImportant. " +
-                "The Date to start is today, the date to end is x days from now, type the quantity of days\n");
-        LocalDateTime createdAT = LocalDateTime.now();
-        studyPlan.assignSteps(getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(),
-                Integer.parseInt(getInput()), Boolean.parseBoolean(getInput()), createdAT, createdAT.plusDays(Long.parseLong(getInput())));
-    }
+      
+        // Get all inputs from the user
+        List<String> stringProperties = List.of(
+            getInput(), // firstStep
+            getInput(), // resetStudyMechanism
+            getInput(), // consistentStep
+            getInput(), // seasonalSteps
+            getInput(), // basicSteps
+            getInput(), // mainObjectiveTitle
+            getInput(), // mainGoalTitle
+            getInput(), // mainMaterialTopic
+            getInput()  // mainTask
+        );
+      
+        // Get the remaining inputs
+        Integer numberOfSteps = Integer.parseInt(getInput());
+        boolean isImportant = Boolean.parseBoolean(getInput());
+        LocalDateTime startDate = LocalDateTime.now();
+        int daysToAdd = Integer.parseInt(getInput());
+        LocalDateTime endDate = startDate.plusDays(daysToAdd);
+      
+        // Create AssignStepsDTO from the input list
+        AssignStepsDTO dto = new AssignStepsDTO(
+            stringProperties.get(0), 
+            stringProperties.get(1), 
+            stringProperties.get(2), 
+            stringProperties.get(3), 
+            stringProperties.get(4), 
+            numberOfSteps, 
+            isImportant, 
+            startDate, 
+            endDate, 
+            stringProperties.get(5), 
+            stringProperties.get(6), 
+            stringProperties.get(7), 
+            stringProperties.get(8) 
+        );
+      
+        // Call the assignSteps method
+        studyPlan.assignSteps(dto);
+      }
 
     private StudyGoal getStudyGoalInfo(){
         handleMethodHeader("(Study Goal Creation)");
