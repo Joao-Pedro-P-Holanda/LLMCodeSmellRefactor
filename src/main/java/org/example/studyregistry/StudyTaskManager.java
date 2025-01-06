@@ -5,6 +5,8 @@ import org.example.studymaterial.Reference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StudyTaskManager {
     private static StudyTaskManager instance;
@@ -27,17 +29,42 @@ public class StudyTaskManager {
         return weekResponsibilities;
     }
 
-    public void setUpWeek(String planName, String objectiveTitle, String objectiveDescription, String materialTopic,
-                          String materialFormat, String goal, String reminderTitle, String reminderDescription,
-                          String mainTaskTitle, String mainHabit, String mainCardStudy){
-        this.weekResponsibilities = new ArrayList<>();
-        this.weekResponsibilities.addAll(Arrays.asList(planName, objectiveTitle, objectiveDescription, materialTopic, materialFormat, goal, reminderTitle, reminderDescription, mainTaskTitle, mainHabit, mainCardStudy));
+    public void setUpWeek(WeekSetupDTO weekSetup) {
+        this.weekResponsibilities = Stream.of(
+                weekSetup.planName(),
+                weekSetup.objectiveTitle(),
+                weekSetup.objectiveDescription(),
+                weekSetup.materialTopic(),
+                weekSetup.materialFormat(),
+                weekSetup.goal(),
+                weekSetup.reminderTitle(),
+                weekSetup.reminderDescription(),
+                weekSetup.mainTaskTitle(),
+                weekSetup.mainHabit(),
+                weekSetup.mainCardStudy()
+        ).collect(Collectors.toList());
     }
 
-    public void handleSetUpWeek(List<String> stringProperties){
-        setUpWeek(stringProperties.get(0), stringProperties.get(1), stringProperties.get(2), stringProperties.get(3),
-                stringProperties.get(4), stringProperties.get(5), stringProperties.get(6), stringProperties.get(7),
-                stringProperties.get(8), stringProperties.get(9), stringProperties.get(10));
+    public void handleSetUpWeek(List<String> stringProperties) {
+        if (stringProperties.size() != 11) {
+            throw new IllegalArgumentException("Invalid number of properties. Expected 11, found " + stringProperties.size());
+        }
+    
+        WeekSetupDTO weekSetup = new WeekSetupDTO(
+                stringProperties.get(0), // planName
+                stringProperties.get(1), // objectiveTitle
+                stringProperties.get(2), // objectiveDescription
+                stringProperties.get(3), // materialTopic
+                stringProperties.get(4), // materialFormat
+                stringProperties.get(5), // goal
+                stringProperties.get(6), // reminderTitle
+                stringProperties.get(7), // reminderDescription
+                stringProperties.get(8), // mainTaskTitle
+                stringProperties.get(9), // mainHabit
+                stringProperties.get(10) // mainCardStudy
+        );
+    
+        setUpWeek(weekSetup);
     }
 
 

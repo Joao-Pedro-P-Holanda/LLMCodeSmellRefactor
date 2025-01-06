@@ -276,14 +276,41 @@ public class StudyRegistryController {
         System.out.println("Study Plan Added");
     }
 
-    private void getWeekInfo(){
-        System.out.println("(Study Task Manager Week Set Up) Type the following info: String planName, String objectiveTitle, " +
-                "String objectiveDescription, String materialTopic, String materialFormat, String goal, String reminderTitle, " +
-                "String reminderDescription, String mainTaskTitle, String mainHabit, String mainCardStudy");
-        studyTaskManager.setUpWeek(getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(),
-                getInput(), getInput(), getInput());
+    private void getWeekInfo() {
+        handleMethodHeader("(Study Task Manager Week Set Up)");
+    
+        // Get all inputs from the user
+        List<String> inputs = List.of(
+            getInput(), // planName
+            getInput(), // objectiveTitle
+            getInput(), // objectiveDescription 
+            getInput(), // materialTopic 
+            getInput(), // materialFormat 
+            getInput(), // goal 
+            getInput(), // reminderTitle 
+            getInput(), // reminderDescription 
+            getInput(), // mainTaskTitle 
+            getInput(), // mainHabit 
+            getInput()  // mainCardStudy 
+        );
+    
+        // Create WeekSetupDTO from the input list
+        WeekSetupDTO weekSetupDTO = new WeekSetupDTO(inputs.get(0), 
+                                                    inputs.get(1), 
+                                                    inputs.get(2), 
+                                                    inputs.get(3), 
+                                                    inputs.get(4), 
+                                                    inputs.get(5), 
+                                                    inputs.get(6), 
+                                                    inputs.get(7), 
+                                                    inputs.get(8), 
+                                                    inputs.get(9), 
+                                                    inputs.get(10));
+    
+        // Call the updated setUpWeek method
+        studyTaskManager.setUpWeek(weekSetupDTO);
     }
-
+    
     private void handleSetUpWeek(){
         getWeekInfo();
     }
